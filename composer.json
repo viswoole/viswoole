@@ -1,6 +1,6 @@
 {
   "name": "viswoole/framework",
-  "description": "SuPHP, 这是一个基于swoole扩展的高性能PHP框架。",
+  "description": "ViSwoole, 这是一个基于swoole扩展的高性能PHP框架。",
   "version": "dev-master",
   "minimum-stability": "stable",
   "license": "proprietary",
