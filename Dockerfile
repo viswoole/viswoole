@@ -20,6 +20,6 @@ COPY . /var/www/app
 EXPOSE 9501
 
 # 入口文件 在容器启动时自动执行
-ENTRYPOINT []
+#ENTRYPOINT []
 
 #CMD [ "tail", "-f", "/dev/null" ]
