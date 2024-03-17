@@ -1,0 +1,5 @@
+/vendor/
+/viswoole/
+/runtime/
+/test/
+.DS_Store
