@@ -14,12 +14,12 @@ LABEL version="${APP_VERSION}"
 WORKDIR /var/www/app
 
 # 复制项目文件到工作目录
-COPY .. /var/www/app
+COPY . /var/www/app
 
 # 暴露容器监听的端口号
-#EXPOSE 9501
+EXPOSE 9501
 
 # 入口文件 在容器启动时自动执行
-#ENTRYPOINT []
+ENTRYPOINT []
 
 #CMD [ "tail", "-f", "/dev/null" ]
