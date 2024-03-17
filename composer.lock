@@ -8,6 +8,59 @@
     "packages": [],
     "packages-dev": [
         {
+            "name": "psr/container",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
+            },
+            "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
             "name": "swoole/ide-helper",
             "version": "dev-master",
             "source": {
@@ -46,14 +99,18 @@
             "dist": {
                 "type": "path",
                 "url": "viswoole/core",
-                "reference": "b8c61eb9eb36cd3a880b032bb319552b275c0289"
+                "reference": "8ef366520ef66cb2ab7326f72756c41f81b1c731"
             },
             "require": {
                 "ext-swoole": ">=5.1",
-                "php": ">=8.3"
+                "php": ">=8.3",
+                "psr/container": ">=2.0.2"
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/Helper.php"
+                ],
                 "psr-4": {
                     "ViSwoole\\Core\\": "src"
                 }
