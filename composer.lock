@@ -1,0 +1,90 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7f0bc50810e3c428feffcb560977343e",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "swoole/ide-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swoole/ide-helper.git",
+                "reference": "33ec7af9111b76d06a70dd31191cc74793551112"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swoole/ide-helper/zipball/33ec7af9111b76d06a70dd31191cc74793551112",
+                "reference": "33ec7af9111b76d06a70dd31191cc74793551112",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Team Swoole",
+                    "email": "team@swoole.com"
+                }
+            ],
+            "description": "IDE help files for Swoole.",
+            "support": {
+                "issues": "https://github.com/swoole/ide-helper/issues",
+                "source": "https://github.com/swoole/ide-helper/tree/5.1.2"
+            },
+            "time": "2024-02-01T22:28:11+00:00"
+        },
+        {
+            "name": "viswoole/core",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "viswoole/core",
+                "reference": "2ab6d87f02d1c2f6feb92daa230ad0c4cbc319cb"
+            },
+            "require": {
+                "ext-swoole": ">=5.1",
+                "php": ">=8.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "core\\": "src"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "zhuchonglin",
+                    "email": "8210856@qq.com"
+                }
+            ],
+            "description": "这是SuPHP的核心构建库",
+            "transport-options": {
+                "relative": true
+            }
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "swoole/ide-helper": 20,
+        "viswoole/core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.3",
+        "ext-swoole": ">=5.1"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
