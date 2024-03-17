@@ -46,7 +46,7 @@
             "dist": {
                 "type": "path",
                 "url": "viswoole/core",
-                "reference": "2ab6d87f02d1c2f6feb92daa230ad0c4cbc319cb"
+                "reference": "b8c61eb9eb36cd3a880b032bb319552b275c0289"
             },
             "require": {
                 "ext-swoole": ">=5.1",
@@ -55,7 +55,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "core\\": "src"
+                    "ViSwoole\\Core\\": "src"
                 }
             },
             "license": [
@@ -67,7 +67,7 @@
                     "email": "8210856@qq.com"
                 }
             ],
-            "description": "这是SuPHP的核心构建库",
+            "description": "这是ViSwoole的核心构建库",
             "transport-options": {
                 "relative": true
             }
