@@ -6,9 +6,11 @@
       <sourceFolder url="file://$MODULE_DIR$/viswoole/core/src" isTestSource="false" packagePrefix="ViSwoole\Core\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/viswoole/core/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/swoole/ide-helper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/viswoole/core" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
