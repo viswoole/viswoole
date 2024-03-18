@@ -3,4 +3,5 @@
 /runtime/
 /test/
 .DS_Store
+composer.lock
 test.php
