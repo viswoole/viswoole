@@ -1,7 +1,8 @@
-/vendor/
-/viswoole/
-/runtime/
-/test/
+/vendor
+/viswoole
+/runtime
+/test
 .DS_Store
 composer.lock
 test.php
+/.idea
