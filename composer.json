@@ -17,7 +17,7 @@
   "require-dev": {
     "swoole/ide-helper": "@dev",
     "viswoole/core": "dev-master",
-    "phpunit/phpunit": "^11.0"
+    "phpunit/phpunit": "^9.5"
   },
   "repositories": [
     {
