@@ -12,19 +12,13 @@
   ],
   "require": {
     "php": ">=8.3",
-    "ext-swoole": ">=5.1"
+    "ext-swoole": ">=5.1",
+    "viswoole/core": "@dev"
   },
   "require-dev": {
     "swoole/ide-helper": "@dev",
-    "viswoole/core": "dev-master",
     "phpunit/phpunit": "^9.5"
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "viswoole/core"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "App\\": "app"
