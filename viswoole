@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+/*
+ *  +----------------------------------------------------------------------
+ *  | ViSwoole [基于swoole开发的高性能快速开发框架]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2024
+ *  +----------------------------------------------------------------------
+ *  | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: ZhuChongLin <8210856@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
+declare (strict_types=1);
+
+use ViSwoole\Core\App;
+
+ini_set('display_errors', 'on');
+// PHP 是否在启动（初始化）阶段发生错误时显示错误 on显示off关闭，正式部署应设置为off
+ini_set('display_startup_errors', 'on');
+
+ini_set('memory_limit', '1G');
+
+error_reporting(E_ALL);
+// 配置全局的根路径
+!defined('BASE_PATH') && define('BASE_PATH', __DIR__);
+
+require __DIR__ . '/vendor/autoload.php';
+
+(function () {
+  (new App())->console->run();
+})();
