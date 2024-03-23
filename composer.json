@@ -1,8 +1,12 @@
 {
   "name": "viswoole/viswoole",
   "description": "ViSwoole, 这是一个基于swoole扩展的高性能PHP框架。",
+  "keywords": [
+    "framework",
+    "viswoole"
+  ],
   "minimum-stability": "dev",
-  "license": "proprietary",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "zhuchonglin",
