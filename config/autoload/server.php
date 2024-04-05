@@ -8,13 +8,14 @@ declare (strict_types=1);
 use Swoole\Constant;
 use Swoole\Http\Server as httpServer;
 use ViSwoole\Core\Exception\Handle;
-use ViSwoole\Core\Server\Event;
+use ViSwoole\Core\Server\EventHandle;
 
 return [
   // 默认启动的服务
   'default_start_server' => env('server', 'http'),
   // 默认的服务PID存储目录
   'default_pid_store_dir' => BASE_PATH . '/runtime/server_pid',
+  // 默认的服务异常处理类
   'default_exception_handle' => Handle::class,
   // 服务定义
   'servers' => [
@@ -47,7 +48,7 @@ return [
         Constant::OPTION_TASK_ENABLE_COROUTINE => true
       ],
       'events' => [
-        Constant::EVENT_REQUEST => [],
+        Constant::EVENT_REQUEST => [\ViSwoole\Core\Server\Http\EventHandle::class, 'onRequest'],
         Constant::EVENT_TASK => [] // 系统内置任务处理方法
       ]
     ]
@@ -79,7 +80,7 @@ return [
   ],
   // 全局服务事件监听
   'events' => [
-    Constant::EVENT_START => [Event::class, 'onStart'],
-    Constant::EVENT_SHUTDOWN => [Event::class, 'onShutdown']
+    Constant::EVENT_START => [EventHandle::class, 'onStart'],
+    Constant::EVENT_SHUTDOWN => [EventHandle::class, 'onShutdown']
   ]
 ];
