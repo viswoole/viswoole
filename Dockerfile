@@ -1,5 +1,5 @@
 # 基础镜像
-FROM zhuchonglin/php_swoole:php8.3.4-swoole5.1.1
+FROM zhuchonglin/php_swoole:php8.3.4-swoole5.1.0
 
 # 版本号变量
 ARG APP_VERSION=1.0.0-dev

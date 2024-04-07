@@ -1,0 +1,28 @@
+version: '3.2'
+services:
+  app:
+    build: ./
+    ports:
+      - "80:9501"
+    volumes:
+      - ./:/app
+    environment:
+      - TZ=Asia/Shanghai
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - mysql:/data
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "123456"  # 将密码设置为一个键值对
+  redis:
+    image: redis:latest
+    volumes:
+      - redis:/data
+    environment:
+      - TZ=Asia/Shanghai
+volumes:
+  mysql:
+  redis:
