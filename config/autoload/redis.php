@@ -10,6 +10,6 @@ use ViSwoole\Cache\RedisConfig;
 return [
   'default' => 'redis',
   'channels' => [
-    'redis' => new RedisConfig()
+    'redis' => new RedisConfig(host: 'viswoole-redis-1')
   ]
 ];
