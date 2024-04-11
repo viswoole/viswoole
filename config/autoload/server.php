@@ -12,7 +12,7 @@ use ViSwoole\Core\Server\EventHandle;
 
 return [
   // 默认启动的服务
-  'default_start_server' => env('server', 'http'),
+  'default_start_server' => env('default_start_server', 'http'),
   // 默认的服务PID存储目录
   'default_pid_store_dir' => BASE_PATH . '/runtime/server_pid',
   // 默认的服务异常处理类
