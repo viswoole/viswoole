@@ -10,7 +10,5 @@ return [
   // 应用初始化
   'AppInit' => [],
   // 应用销毁
-  'AppDestroyed' => [],
-  // 路由加载完毕
-  'RouteLoaded' => []
+  'AppDestroyed' => []
 ];
