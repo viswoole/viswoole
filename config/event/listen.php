@@ -1,7 +1,7 @@
 <?php
 // +----------------------------------------------------------------------
 // | 全局事件监听注册
-// | return['event'=>[class,method],'event'=>listen:class,'event'=>callback]
+// | return['event'=>[class,method],'event'=>listen::class,'event'=>callback]
 // +----------------------------------------------------------------------
 
 declare (strict_types=1);
