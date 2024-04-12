@@ -7,8 +7,9 @@ declare (strict_types=1);
 
 use Swoole\Constant;
 use Swoole\Http\Server as httpServer;
-use ViSwoole\Core\Exception\Handle;
 use ViSwoole\Core\Server\EventHandle;
+use ViSwoole\HttpServer\EventHandle as HttpEventHandle;
+use ViSwoole\HttpServer\Exception\Handle;
 
 return [
   // 默认启动的服务
@@ -48,7 +49,7 @@ return [
         Constant::OPTION_TASK_ENABLE_COROUTINE => true
       ],
       'events' => [
-        Constant::EVENT_REQUEST => [\ViSwoole\Core\Server\Http\EventHandle::class, 'onRequest'],
+        Constant::EVENT_REQUEST => [HttpEventHandle::class, 'onRequest'],
         Constant::EVENT_TASK => [] // 系统内置任务处理方法
       ]
     ]
