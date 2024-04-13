@@ -30,6 +30,7 @@
   },
   "scripts": {
     "post-autoload-dump": [
+      "php viswoole vendor:publish",
       "php viswoole service:discover",
       "php viswoole command:discover"
     ]
