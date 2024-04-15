@@ -19,6 +19,24 @@
     "ext-swoole": ">=5.1",
     "viswoole/core": "@dev"
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "framework/src/core"
+    },
+    {
+      "type": "path",
+      "url": "framework/src/cache"
+    },
+    {
+      "type": "path",
+      "url": "framework/src/http-server"
+    },
+    {
+      "type": "path",
+      "url": "framework/src/log"
+    }
+  ],
   "require-dev": {
     "swoole/ide-helper": "@dev",
     "phpunit/phpunit": "^9.5"
