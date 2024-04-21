@@ -17,13 +17,11 @@
 
 declare (strict_types=1);
 
-use ViSwoole\HttpServer\Router\Method;
-
 return [
   // 是否区分大小写
   'case_sensitive' => false,
   // 伪静态后缀，支持通过数组设置多个。
-  'suffix' => Method::ANY,
+  'suffix' => '*',
   // 域名校验 例如 www.baidu.com
   'domain' => [],
   // 默认的路由变量正则表达式
