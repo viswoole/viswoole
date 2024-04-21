@@ -17,7 +17,7 @@ namespace App;
 /**
  * 自定义请求类
  */
-class Request extends \ViSwoole\Core\Server\Http\Request
+class Request extends \ViSwoole\HttpServer\Request
 {
   protected array $filter = [
     'htmlspecialchars' => null

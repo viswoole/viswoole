@@ -17,7 +17,7 @@ namespace App;
 /**
  * 自定义响应类
  */
-class Response extends \ViSwoole\Core\Server\Http\Response
+class Response extends \ViSwoole\HttpServer\Response
 {
 
 }
