@@ -50,7 +50,9 @@ return [
       ],
       'events' => [
         Constant::EVENT_REQUEST => [HttpEventHandle::class, 'onRequest'],
-        Constant::EVENT_TASK => [] // 系统内置任务处理方法
+        Constant::EVENT_TASK => function () {
+
+        } // 系统内置任务处理方法
       ]
     ]
   ],
