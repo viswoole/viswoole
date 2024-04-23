@@ -23,7 +23,8 @@ return [
     'http' => [
       // 服务类型
       'type' => httpServer::class,
-      'exception_handle' => Handle::class,// 服务异常处理类
+      // 服务异常处理类
+      'exception_handle' => Handle::class,
       // 构造参数 参考https://wiki.swoole.com/#/server/methods?id=__construct
       'construct' => [
         // 指定监听的 ip 地址。
