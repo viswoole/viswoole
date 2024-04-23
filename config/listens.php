@@ -11,8 +11,6 @@ return [
   'AppInit' => [],
   // 应用销毁
   'AppDestroyed' => [],
-  // 服务器启动
-  'ServerStart' => [],
-  // 服务器停止
-  'ServerShutdown' => []
+  // 服务器启动之前
+  'ServerStartBefore' => []
 ];
