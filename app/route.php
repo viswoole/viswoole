@@ -10,24 +10,14 @@ use ViSwoole\HttpServer\Response;
 use ViSwoole\HttpServer\Route;
 
 Route::get('/', function (Request $request, Response $response) {
-  return 'hello viswoole';
+  return $response->send('<h1>hello viswoole' . rand(1000, 9999) . '</h1>');
 });
 Route::miss(
   function (Request $request, Response $response) {
-    if ($request->getMethod() === 'OPTIONS') {
-      // 跨域
-      $response->setHeader([
-        'Access-Control-Allow-Origin' => '*',
-        'Access-Control-Allow-Headers' => '*',
-        'Access-Control-Allow-Methods' => 'GET,POST,PATCH,PUT,DELETE,OPTIONS,DELETE',
-      ]);
-      return $response->success();
-    } else {
-      $path = $request->getPath();
-      if ($path === '/favicon.ico') {
-        return $response->sendfile(BASE_PATH . '/static/favicon.ico');
-      }
-      return $response->exception('404', 404, 404);
+    $path = $request->getPath();
+    if ($path === '/favicon.ico') {
+      return $response->sendfile(BASE_PATH . '/static/favicon.ico');
     }
+    return $response->exception('404', 404, 404);
   }
 );
