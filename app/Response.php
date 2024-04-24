@@ -19,5 +19,5 @@ namespace App;
  */
 class Response extends \ViSwoole\HttpServer\Response
 {
-
+  protected bool $messageEchoToConsole = true;
 }
