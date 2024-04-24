@@ -4,7 +4,7 @@
 WATCH_DIR="$(dirname "$(readlink -f "$0")")"
 
 # Swoole 服务启动命令
-SWOOLE_START_COMMAND="php viswoole server:start"
+SWOOLE_START_COMMAND="php viswoole server:start -f"
 # Swoole 服务停止命令
 SWOOLE_CLOSE_COMMAND="php viswoole server:close"
 # 要排除的目录
