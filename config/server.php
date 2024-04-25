@@ -8,6 +8,7 @@ declare (strict_types=1);
 use Swoole\Constant;
 use Swoole\Http\Server as httpServer;
 use ViSwoole\Core\Server\EventHandle;
+use ViSwoole\Core\Server\Task;
 use ViSwoole\HttpServer\EventHandle as HttpEventHandle;
 use ViSwoole\HttpServer\Exception\Handle;
 
@@ -50,10 +51,10 @@ return [
         Constant::OPTION_TASK_ENABLE_COROUTINE => true
       ],
       'events' => [
+        // HTTP请求处理
         Constant::EVENT_REQUEST => [HttpEventHandle::class, 'onRequest'],
-        Constant::EVENT_TASK => function () {
-
-        } // 系统内置任务处理方法
+        // 任务分发
+        Constant::EVENT_TASK => [Task::class, 'dispatch']
       ]
     ]
   ],
