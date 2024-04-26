@@ -12,16 +12,16 @@ EXCLUDE_DIRS="runtime|vendor"
 # 设置一个trap来捕获中断信号并执行清理操作
 trap 'printf "\n\033[0;33m🛑 捕获到停止信号，正在停止服务运行...\033[0m\n"; '"$SWOOLE_CLOSE_COMMAND"'; exit 0' INT
 # 获取当前 Swoole 服务的 PID
-get_swoole_pid() {
-    pid=$(pgrep -f "$SWOOLE_START_COMMAND" | head -n 1)
-    echo "$pid"
-}
+#get_swoole_pid() {
+#    pid=$(pgrep -f "$SWOOLE_START_COMMAND" | head -n 1)
+#    echo "$pid"
+#}
 # 重启 Swoole 服务
 restart_swoole() {
-    pid=$(get_swoole_pid)
-    if [ -n "$pid" ]; then
-        kill -15 "$pid"
-    fi
+#    pid=$(get_swoole_pid)
+#    if [ -n "$pid" ]; then
+#        kill -15 "$pid"
+#    fi
     $SWOOLE_START_COMMAND &
 }
 restart_swoole
