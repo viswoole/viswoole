@@ -17,7 +17,8 @@
   "require": {
     "php": ">=8.3",
     "ext-swoole": ">=5.1",
-    "viswoole/core": "@dev"
+    "viswoole/core": "@dev",
+    "viswoole/api-doc": "@dev"
   },
   "repositories": [
     {
@@ -35,6 +36,10 @@
     {
       "type": "path",
       "url": "framework/src/log"
+    },
+    {
+      "type": "path",
+      "url": "framework/src/api-doc"
     }
   ],
   "require-dev": {
