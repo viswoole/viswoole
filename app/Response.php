@@ -19,5 +19,8 @@ namespace App;
  */
 class Response extends \ViSwoole\HttpServer\Response
 {
-  protected bool $messageEchoToConsole = true;
+  /**
+   * @var bool 是否将响应输出到控制台
+   */
+  protected bool $echoToConsole = false;
 }
