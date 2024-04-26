@@ -10,7 +10,7 @@ SWOOLE_CLOSE_COMMAND="php viswoole server:close"
 # 要排除的目录
 EXCLUDE_DIRS="runtime|vendor"
 # 设置一个trap来捕获中断信号并执行清理操作
-trap 'printf "\n\033[0;33m🛑 捕获到停止信号，正在停止服务运行...\n"; '"$SWOOLE_CLOSE_COMMAND"'; exit 0' INT
+trap 'printf "\n\033[0;33m🛑 捕获到停止信号，正在停止服务运行...\033[0m\n"; '"$SWOOLE_CLOSE_COMMAND"'; exit 0' INT
 # 获取当前 Swoole 服务的 PID
 get_swoole_pid() {
     pid=$(pgrep -f "$SWOOLE_START_COMMAND" | head -n 1)
@@ -38,7 +38,7 @@ while read -r changed_file; do
         if ! echo "$file_path" | grep -qE "(^|/)($exclude_pattern)(/|$)"; then
             printf "\033[0;33m🆕 Detected changes in file: %s\033[0m\n" "$changed_file"
             restart_swoole
-            printf "\033[0;33m🔄 Swoole server restarted.\n"
+            printf "\033[0;33m🔄 Swoole server restarted.\033[0m\n"
         fi
     fi
 done
