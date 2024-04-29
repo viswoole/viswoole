@@ -17,7 +17,7 @@ namespace App\Middlewares;
 
 use Closure;
 use Override;
-use ViSwoole\HttpServer\Contract\MiddlewareInterface;
+use ViSwoole\Core\Contract\MiddlewareInterface;
 use ViSwoole\HttpServer\Contract\RequestInterface;
 use ViSwoole\HttpServer\Contract\ResponseInterface;
 
@@ -26,22 +26,25 @@ use ViSwoole\HttpServer\Contract\ResponseInterface;
  */
 class AllowCrossDomain implements MiddlewareInterface
 {
-  public function __construct(protected ResponseInterface $response)
+  public function __construct(
+    protected RequestInterface  $request,
+    protected ResponseInterface $response
+  )
   {
   }
 
   /**
    * @inheritDoc
    */
-  #[Override] public function process(RequestInterface $request, Closure $handler): mixed
+  #[Override] public function process(Closure $handler): mixed
   {
-    if ($request->getMethod() === 'OPTIONS') {
+    if ($this->request->getMethod() === 'OPTIONS') {
       $this->response->setHeader([
         'Access-Control-Allow-Origin' => '*',
         'Access-Control-Allow-Headers' => '*'
       ]);
       return $this->response->success();
     }
-    return $handler($request);
+    return $handler();
   }
 }

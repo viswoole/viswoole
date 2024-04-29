@@ -16,9 +16,9 @@ declare (strict_types=1);
 namespace App\Controller;
 
 use App\Response;
+use ViSwoole\Core\Router\Annotation\AutoRouteController;
+use ViSwoole\Core\Router\Annotation\RouteMapping;
 use ViSwoole\HttpServer\Contract\ResponseInterface;
-use ViSwoole\HttpServer\Router\Annotation\AutoRouteController;
-use ViSwoole\HttpServer\Router\Annotation\RouteMapping;
 
 #[AutoRouteController]
 class AutoRouteExample

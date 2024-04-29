@@ -6,7 +6,7 @@
 declare (strict_types=1);
 
 use App\Middlewares\AllowCrossDomain;
-use ViSwoole\HttpServer\Middleware;
+use ViSwoole\Core\Middleware;
 
 // 该中间件用于解决跨域问题
 Middleware::add(AllowCrossDomain::class);
