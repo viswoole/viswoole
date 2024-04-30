@@ -17,9 +17,9 @@ namespace App\Controller;
 
 use Swoole\Server as SwooleServer;
 use ViSwoole\Core\Exception\TaskException;
+use ViSwoole\Core\Router\Annotation\RouteController;
+use ViSwoole\Core\Router\Annotation\RouteMapping;
 use ViSwoole\Core\Server\Task;
-use ViSwoole\HttpServer\Router\Annotation\RouteController;
-use ViSwoole\HttpServer\Router\Annotation\RouteMapping;
 
 #[RouteController('')]
 class TaskExample
