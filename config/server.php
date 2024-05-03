@@ -7,10 +7,11 @@ declare (strict_types=1);
 
 use Swoole\Constant;
 use Swoole\Http\Server as httpServer;
+use ViSwoole\Core\Exception\Handle;
 use ViSwoole\Core\Server\EventHandle;
 use ViSwoole\Core\Server\Task;
 use ViSwoole\HttpServer\EventHandle as HttpEventHandle;
-use ViSwoole\HttpServer\Exception\Handle;
+use ViSwoole\HttpServer\Exception\Handle as HttpExceptionHandle;
 
 return [
   // 默认启动的服务
@@ -25,7 +26,7 @@ return [
       // 服务类型
       'type' => httpServer::class,
       // 服务异常处理类
-      'exception_handle' => Handle::class,
+      'exception_handle' => HttpExceptionHandle::class,
       // 构造参数 参考https://wiki.swoole.com/#/server/methods?id=__construct
       'construct' => [
         // 指定监听的 ip 地址。
