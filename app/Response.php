@@ -14,6 +14,7 @@
 declare (strict_types=1);
 
 namespace App;
+
 /**
  * 自定义响应类
  */
