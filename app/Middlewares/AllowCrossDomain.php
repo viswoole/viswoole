@@ -43,7 +43,7 @@ class AllowCrossDomain implements MiddlewareInterface
         'Access-Control-Allow-Origin' => '*',
         'Access-Control-Allow-Headers' => '*'
       ]);
-      return $this->response->success();
+      return $this->response;
     }
     return $handler();
   }
