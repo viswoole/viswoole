@@ -1,11 +1,10 @@
-/vendor
-/framework
-/runtime
-/tests
-/.idea
+/vendor/
+/framework/
+/runtime/
+/tests/
+/.idea/
 .DS_Store
 composer.lock
 test.php
 .phpunit.result.cache
 .env
-
