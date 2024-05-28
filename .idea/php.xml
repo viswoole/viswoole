@@ -12,6 +12,7 @@
   </component>
   <component name="PhpAnalysisConfiguration">
     <unchecked_exceptions>
+      <fqn value="\LogicException" />
       <fqn value="\RuntimeException" />
       <fqn value="\TypeError" />
     </unchecked_exceptions>
