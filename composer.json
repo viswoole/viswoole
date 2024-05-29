@@ -23,7 +23,8 @@
   "require": {
     "php": ">=8.3",
     "ext-swoole": ">=5.1",
-    "viswoole/framework": "@dev"
+    "viswoole/framework": "@dev",
+    "ext-sockets": "*"
   },
   "require-dev": {
     "swoole/ide-helper": "@dev",
