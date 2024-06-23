@@ -14,7 +14,8 @@
 
 declare (strict_types=1);
 
-use Viswoole\App;
+
+use Viswoole\Core\App;
 
 ini_set('display_errors', 'on');
 // PHP 是否在启动（初始化）阶段发生错误时显示错误 on显示off关闭，正式部署应设置为off
