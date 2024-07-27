@@ -24,7 +24,17 @@ use Viswoole\Router\Annotation\AutoRouteController;
  */
 #[AutoRouteController] class Example
 {
-  public static function test(\App\Interface\Example $info, Response $response): ResponseInterface
+  /**
+   * 测试依赖注入
+   *
+   * @param \App\Interface\Example $info
+   * @param Response $response
+   * @return ResponseInterface
+   */
+  public static function test(
+    \App\Interface\Example $info,
+    Response               $response
+  ): ResponseInterface
   {
     return $response->html('<h1>Hello ' . $info->name . '</h1>');
   }
