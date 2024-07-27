@@ -16,6 +16,7 @@ declare (strict_types=1);
 namespace App\Interface;
 
 use Viswoole\Core\Validate\Rules\Chinese;
+use Viswoole\Core\Validate\Rules\Length;
 
 /**
  * 该类用于演示将类，用于参数校验
@@ -26,7 +27,7 @@ class Example
    * @param string $name 名称
    */
   public function __construct(
-    #[Chinese] public string $name
+    #[Chinese, Length(3, 10)] public string $name
   )
   {
   }

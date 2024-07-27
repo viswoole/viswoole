@@ -29,13 +29,13 @@ use Viswoole\Router\Annotation\AutoRouteController;
   /**
    * 测试类用于依赖注入校验
    *
-   * @param \App\Interface\Example $info
+   * @param \App\Interface\Example|null $info
    * @param Response $response
    * @return ResponseInterface
    */
   public static function hello(
-    \App\Interface\Example $info,
-    Response               $response
+    ?\App\Interface\Example $info,
+    Response                $response
   ): ResponseInterface
   {
     return $response->html('<h1>Hello ' . $info->name . '</h1>');
@@ -44,14 +44,15 @@ use Viswoole\Router\Annotation\AutoRouteController;
   /**
    * @param File $file 上传的文件
    * @param Response $response
-   * @return bool
+   * @return ResponseInterface
    */
   public static function upload(
     #[FileRule('file', 'image/png')] File $file,
     Response                              $response
-  )
+  ): ResponseInterface
   {
-    return $response->sendfile($file->list[0]->tmp_path);
+    $count = $file->count();
+    return $response->html("<h1>共上传了 $count 个文件,name $file->name</h1>");
   }
 }
 
