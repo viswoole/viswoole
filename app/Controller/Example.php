@@ -17,9 +17,12 @@ namespace App\Controller;
 
 use App\Response;
 use Viswoole\HttpServer\AutoInject\File;
+use Viswoole\HttpServer\AutoInject\Header;
 use Viswoole\HttpServer\Contract\ResponseInterface;
 use Viswoole\HttpServer\Validate\FileRule;
+use Viswoole\HttpServer\Validate\HeaderRule;
 use Viswoole\Router\Annotation\AutoRouteController;
+use Viswoole\Router\RouterManager;
 
 /**
  * 示例
@@ -42,6 +45,8 @@ use Viswoole\Router\Annotation\AutoRouteController;
   }
 
   /**
+   * 测试上传文件于自动注入
+   *
    * @param File $file 上传的文件
    * @param Response $response
    * @return ResponseInterface
@@ -53,6 +58,28 @@ use Viswoole\Router\Annotation\AutoRouteController;
   {
     $count = $file->count();
     return $response->html("<h1>共上传了 $count 个文件,name $file->name</h1>");
+  }
+
+  /**
+   * 测试请求头验证和注入
+   *
+   * @param Header $header
+   * @return string
+   */
+  public static function header(#[HeaderRule('accept')] Header $header): string
+  {
+    return $header->value;
+  }
+
+  /**
+   * 获取API文档
+   *
+   * @param RouterManager $router
+   * @return array
+   */
+  public static function api(RouterManager $router): array
+  {
+    return $router->collector()->getApiDoc();
   }
 }
 
