@@ -22,6 +22,7 @@ use Viswoole\HttpServer\Contract\ResponseInterface;
 use Viswoole\HttpServer\Validate\FileRule;
 use Viswoole\HttpServer\Validate\HeaderRule;
 use Viswoole\Router\Annotation\AutoRouteController;
+use Viswoole\Router\Annotation\RouteMapping;
 use Viswoole\Router\RouterManager;
 
 /**
@@ -80,6 +81,21 @@ use Viswoole\Router\RouterManager;
   public static function api(RouterManager $router): array
   {
     return $router->collector()->getApiDoc();
+  }
+
+  /**
+   * 动态路径匹配
+   *
+   * @param int|null $id
+   * @param ResponseInterface $response
+   * @return ResponseInterface
+   */
+  #[RouteMapping('dynamic/{id?}')] public static function dynamic(
+    ?int              $id,
+    ResponseInterface $response
+  ): ResponseInterface
+  {
+    return $response->html("<h1>可选动态参数匹配到：$id</h1>");
   }
 }
 
