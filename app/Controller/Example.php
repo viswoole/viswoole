@@ -43,7 +43,7 @@ use Viswoole\Router\RouterManager;
     Response         $response
   ): ResponseInterface
   {
-    return $response->html('<h1>Hello ' . $info->name . '</h1>');
+    return $response->html('<h1>Hello ' . $info?->name . '</h1>');
   }
 
   /**
