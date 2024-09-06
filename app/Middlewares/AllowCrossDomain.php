@@ -26,6 +26,10 @@ use Viswoole\HttpServer\Contract\ResponseInterface;
 class AllowCrossDomain implements MiddlewareInterface
 {
 
+  /**
+   * @param RequestInterface $request
+   * @param ResponseInterface $response
+   */
   public function __construct(
     protected RequestInterface  $request,
     protected ResponseInterface $response
