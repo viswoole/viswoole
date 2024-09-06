@@ -16,6 +16,6 @@ return [
   'default_pattern_regex' => '[\w\.]+',
   // 要加载的路线配置文件
   'route_config_files' => [
-    BASE_PATH . '/config/route.php'
+    BASE_PATH . '/config/route/route.php'
   ]
 ];
