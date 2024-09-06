@@ -21,7 +21,7 @@ use Viswoole\Core\Validate\Rules\Length;
 /**
  * 该类用于演示将类，用于参数校验
  */
-class Example
+class UserInfoExample
 {
   /**
    * @param string $name 名称

@@ -15,6 +15,7 @@ declare (strict_types=1);
 
 namespace App\Controller;
 
+use App\Interface\UserInfoExample;
 use App\Response;
 use Viswoole\HttpServer\AutoInject\File;
 use Viswoole\HttpServer\AutoInject\Header;
@@ -33,13 +34,13 @@ use Viswoole\Router\RouterManager;
   /**
    * 测试类用于依赖注入校验
    *
-   * @param \App\Interface\Example|null $info
+   * @param UserInfoExample|null $info
    * @param Response $response
    * @return ResponseInterface
    */
   public static function hello(
-    ?\App\Interface\Example $info,
-    Response                $response
+    ?UserInfoExample $info,
+    Response         $response
   ): ResponseInterface
   {
     return $response->html('<h1>Hello ' . $info->name . '</h1>');
