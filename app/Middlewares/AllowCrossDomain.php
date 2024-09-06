@@ -16,6 +16,7 @@ declare (strict_types=1);
 namespace App\Middlewares;
 
 use Closure;
+use Override;
 use Viswoole\Core\Contract\MiddlewareInterface;
 use Viswoole\HttpServer\Contract\RequestInterface;
 use Viswoole\HttpServer\Contract\ResponseInterface;
@@ -43,7 +44,7 @@ class AllowCrossDomain implements MiddlewareInterface
    * @param Closure $handler 下一个处理程序
    * @return mixed
    */
-  #[\Override] public function process(Closure $handler): mixed
+  #[Override] public function process(Closure $handler): mixed
   {
     if ($this->request->getMethod() === 'OPTIONS') {
       $this->response->setHeaders([
