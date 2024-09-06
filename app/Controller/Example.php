@@ -81,7 +81,7 @@ use Viswoole\Router\RouterManager;
    */
   public static function api(RouterManager $router): array
   {
-    return $router->collector()->getApiDoc();
+    return $router->getApiShape();
   }
 
   /**
