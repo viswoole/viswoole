@@ -2,13 +2,7 @@
 /.idea/
 # 忽略依赖库
 /vendor/
-# 框架核心库开发目录
-/framework/
-# 运行时文件缓存目录
-/runtime/
 # 忽略composer的安装缓存
 composer.lock
-# 开发时使用的测试文件
-test.php
-# 忽略开发时的环境配置文件
+# 忽略.env环境配置文件
 .env
