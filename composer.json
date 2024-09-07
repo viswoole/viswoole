@@ -5,27 +5,22 @@
     "framework",
     "viswoole"
   ],
-  "minimum-stability": "dev",
+  "homepage": "https://viswoole.com",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "type": "project",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "authors": [
     {
       "name": "zhuchonglin",
       "email": "8210856@qq.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "path",
-      "url": "framework"
-    }
-  ],
   "require": {
     "php": ">=8.3",
     "ext-swoole": ">=5.1",
     "ext-sockets": "*",
-    "viswoole/framework": "@dev"
+    "viswoole/framework": ">=1.0.0"
   },
   "require-dev": {
     "swoole/ide-helper": ">=5.1",
