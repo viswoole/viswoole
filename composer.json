@@ -1,6 +1,6 @@
 {
   "name": "viswoole/viswoole",
-  "description": "viswoole, 这是一个基于swoole扩展的高性能PHP可视化开发框架。",
+  "description": "viswoole是一个基于swoole扩展的高性能开发框架。",
   "keywords": [
     "framework",
     "viswoole"
