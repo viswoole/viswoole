@@ -31,7 +31,7 @@ return [
   'channel' => [
     // 驱动类需继承Viswoole\Database\Channel
     'default' => new PDOChannel(
-      host    : env('DATABASE_HOST', 'viswoole-mysql-1'),
+      host    : env('DATABASE_HOST', '127.0.0.1'),
       port    : (int)env('DATABASE_PORT', 3306),
       database: env('DATABASE_NAME', ''),
       username: env('DATABASE_USER', 'root'),
