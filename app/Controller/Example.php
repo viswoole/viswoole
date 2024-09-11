@@ -89,16 +89,15 @@ use Viswoole\Router\RouterManager;
   /**
    * 动态路径匹配
    *
+   * @access public
    * @param int|null $id
    * @param ResponseInterface $response
    * @return ResponseInterface
    */
-  #[RouteMapping('dynamic/{id?}')] public static function dynamic(
-    ?int              $id,
-    ResponseInterface $response
-  ): ResponseInterface
+  #[RouteMapping('dynamic/{id?}')]
+  public static function dynamic(?int $id, ResponseInterface $response): ResponseInterface
   {
-    return $response->html("<h1>可选动态参数匹配到：$id</h1>");
+    return $response->html("<h1>可选动态参数{$id}匹配到：$id</h1>");
   }
 }
 
