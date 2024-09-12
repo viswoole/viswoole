@@ -23,28 +23,28 @@ use Viswoole\HttpServer\Contract\ResponseInterface;
 use Viswoole\HttpServer\Request\File;
 use Viswoole\HttpServer\Request\Header;
 use Viswoole\Router\Annotation\AutoRouteController;
+use Viswoole\Router\Annotation\Returned;
 use Viswoole\Router\Annotation\RouteMapping;
 use Viswoole\Router\RouterManager;
 
 /**
  * 示例
  */
-#[AutoRouteController] class Example
+#[AutoRouteController(options: ['sort' => 999])]
+class Example
 {
   /**
    * 测试类用于依赖注入校验
    *
    * @access public
    * @param UserInfoExample|null $info
-   * @param Response $response
-   * @return ResponseInterface
+   * @return string
    */
   public static function hello(
     ?UserInfoExample $info,
-    Response         $response
-  ): ResponseInterface
+  ): string
   {
-    return $response->html('<h1>Hello ' . $info?->name . '</h1>');
+    return '<h1>Hello ' . $info?->name . '</h1>';
   }
 
   /**
@@ -70,6 +70,7 @@ use Viswoole\Router\RouterManager;
    * @param Header $accept
    * @return string
    */
+  #[Returned('正常响应', ['status' => '6666'])]
   public static function header(#[InjectHeader] Header $accept): string
   {
     return $accept->value();
