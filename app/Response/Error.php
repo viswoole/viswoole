@@ -13,23 +13,39 @@
 
 declare (strict_types=1);
 
-namespace App\Interface;
+namespace App\Response;
 
-use Viswoole\Core\Validate\Rules\Chinese;
-use Viswoole\Core\Validate\Rules\Length;
-use Viswoole\Router\RequestInjectInterface;
+use Attribute;
+use Viswoole\Router\Annotation\Returned;
 
 /**
- * 该类用于演示将类，用于参数校验
+ * 错误响应
  */
-class UserInfoExample implements RequestInjectInterface
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_FUNCTION | Attribute::IS_REPEATABLE)]
+class Error extends Returned
 {
   /**
-   * @param string $name 名称
+   * 构建错误响应
+   *
+   * @param string $message 提示信息
+   * @param int $code 响应码
+   * @param array $data 响应数据
    */
   public function __construct(
-    #[Chinese, Length(3, 10)] public string $name
+    string $message,
+    int    $code = -1,
+    array  $data = [],
   )
   {
+    parent::__construct(
+      '失败响应',
+      [
+        'message|消息' => $message,
+        'code|响应码' => $code,
+        'data|响应数据' => $data,
+      ],
+      200,
+      Returned::TYPE_JSON
+    );
   }
 }
