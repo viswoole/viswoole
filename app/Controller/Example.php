@@ -15,15 +15,15 @@ declare (strict_types=1);
 
 namespace App\Controller;
 
-use App\Interface\UserInfoExample;
 use App\Response;
 use Viswoole\HttpServer\AutoInject\InjectFile;
+use Viswoole\HttpServer\AutoInject\InjectGet;
 use Viswoole\HttpServer\AutoInject\InjectHeader;
+use Viswoole\HttpServer\AutoInject\InjectPost;
 use Viswoole\HttpServer\Contract\ResponseInterface;
-use Viswoole\HttpServer\Request\File;
-use Viswoole\HttpServer\Request\Header;
+use Viswoole\HttpServer\Message\UploadedFile;
+use Viswoole\HttpServer\Validate\FileRule;
 use Viswoole\Router\Annotation\AutoRouteController;
-use Viswoole\Router\Annotation\Returned;
 use Viswoole\Router\Annotation\RouteMapping;
 use Viswoole\Router\RouterManager;
 
@@ -37,43 +37,43 @@ class Example
    * 测试类用于依赖注入校验
    *
    * @access public
-   * @param UserInfoExample|null $info
+   * @param string $name
    * @return string
    */
-  public static function hello(
-    ?UserInfoExample $info,
-  ): string
+  public static function hello(#[InjectGet] string $name): string
   {
-    return '<h1>Hello ' . $info?->name . '</h1>';
+    return $name;
   }
 
   /**
    * 测试上传文件于自动注入
    *
    * @access public
-   * @param File|null $file 上传的文件
+   * @param UploadedFile $file 上传的文件
    * @param Response $response
    * @return ResponseInterface
    */
   public static function upload(
-    #[InjectFile('image/png')] ?File $file,
-    Response                         $response
+    #[FileRule('image/png'), InjectFile] UploadedFile $file,
+    Response                                          $response
   ): ResponseInterface
   {
-    $count = $file->count();
-    return $response->html("<h1>共上传了 $count 个文件</h1>");
+    // 获取上传文件名称
+    $name = $file->getClientFilename();
+    // 上传文件类型
+    // $type = $file->getClientMediaType();
+    return $response->html("<h1>共上传了 $name 文件</h1>");
   }
 
   /**
-   * 测试请求头验证和注入
+   * 获取请求头用例
    *
-   * @param Header $accept
+   * @param string $accept
    * @return string
    */
-  #[Returned('正常响应', ['status' => '6666'])]
-  public static function header(#[InjectHeader] Header $accept): string
+  public static function header(#[InjectHeader] string $accept): string
   {
-    return $accept->value();
+    return $accept;
   }
 
   /**
@@ -82,6 +82,7 @@ class Example
    * @param RouterManager $router
    * @return array
    */
+  #[Response\Success(['test|测试' => 1])]
   public static function api(RouterManager $router): array
   {
     return $router->getApiShape();
@@ -96,9 +97,11 @@ class Example
    * @return ResponseInterface
    */
   #[RouteMapping('dynamic/{id?}')]
-  public static function dynamic(?int $id, ResponseInterface $response): ResponseInterface
+  public static function dynamic(
+    #[InjectPost] ?int $id
+  ): string
   {
-    return $response->html("<h1>可选动态参数{$id}匹配到：$id</h1>");
+    return "<h1>可选动态参数id匹配到：$id</h1>";
   }
 }
 
