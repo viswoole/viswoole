@@ -16,7 +16,7 @@ declare (strict_types=1);
 namespace App\Response;
 
 use Attribute;
-use Viswoole\Router\Annotation\Returned;
+use Viswoole\Router\ApiDoc\Annotation\Returned;
 
 /**
  * 成功响应
