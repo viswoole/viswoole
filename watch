@@ -11,6 +11,18 @@
 # 使用该脚本监控文件变化，并自动重启服务，系统必须安装inotify-tools工具。
 # 监听的目录
 WATCH_DIR="$(dirname "$(readlink -f "$0")")"
+# 要监听文件的后缀
+WATCH_EXT=".php|.env"
+# 要排除的目录
+EXCLUDE_DIRS="runtime|vendor|.idea|.vscode|.git"
+# 构建排除目录的正则表达式
+EXCLUDE_PATTERN="^$WATCH_DIR/($(echo "$EXCLUDE_DIRS" | sed 's/\./\\./g'))(/.*)?"
+# 构建文件后缀的正则表达式
+WATCH_EXT_PATTERN="$WATCH_EXT$"
+# 设置防抖间隔（以秒为单位）
+DEBOUNCE_INTERVAL=1
+# 用来保存上次重启时间的时间戳
+LAST_RESTART_TIME=0
 # 根据传入的参数决定启动命令
 if [ -n "$1" ]; then
   # Swoole 服务启动命令
@@ -21,14 +33,6 @@ else
   SWOOLE_START_COMMAND="php viswoole server:start"
   SWOOLE_CLOSE_COMMAND="php viswoole server:close"
 fi
-# 要排除的目录
-EXCLUDE_DIRS="runtime|vendor|.idea|.vscode"
-# 构建排除目录的正则表达式，对 | 进行转义并构建完整模式
-EXCLUDE_PATTERN="^$WATCH_DIR/($(echo "$EXCLUDE_DIRS" | sed 's/,/\\|/g'))(/.*)?"
-# 设置防抖间隔（以秒为单位）
-DEBOUNCE_INTERVAL=1
-# 用来保存上次重启时间的时间戳
-LAST_RESTART_TIME=0
 # 设置一个trap来捕获中断信号并执行清理操作 (Ctrl+C) ，信号已被viswoole内部接管，无需再需处理
 # trap 'printf "\n\033[0;33m🛑 捕获到停止信号，正在停止服务运行...\033[0m\n"; '"$SWOOLE_CLOSE_COMMAND"'; exit 0' INT
 # 获取当前 Swoole 服务的 PID
@@ -85,20 +89,20 @@ restart_swoole_debounced() {
 start_monitoring() {
   # 输出正在统计的信息
   printf "\033[0;33m📊 The number of monitored files is being counted...\033[0m\n"
-  # 使用 find 获取所有文件，然后通过正则表达式排除指定目录及其子目录
-  file_count=$(find "$WATCH_DIR" -type f | grep -vE "$EXCLUDE_PATTERN" | grep -c .)
+  # 使用 find 获取所有文件，然后通过正则表达式 筛选出要监听的文件
+  file_count=$(find "$WATCH_DIR" -type f | grep -vE "$EXCLUDE_PATTERN" | grep -E "$WATCH_EXT_PATTERN" | grep -c .)
   # 输出监控信息
-  printf "\033[0;33m📂 Monitoring directory: %s\n📁 Excluded directory: %s\n📃 Total files: %d\n👀 Waiting for changes...\033[0m\n" "$WATCH_DIR" "$EXCLUDE_DIRS" "$file_count"
+  printf "\033[0;33m📂 Monitoring directory: %s\n📁 Excluded directory: %s\n📃 Total files: %d，expansion：%s\n👀 Waiting for changes...\033[0m\n" "$WATCH_DIR" "$EXCLUDE_DIRS" "$file_count" "$WATCH_EXT"
   # 使用inotifywait监文件变动，并在 Watches established. 后执行一次restart_swoole
   # 可在"$WATCH_DIR"后面加上`> /dev/null 2>&1`即可静默执行，但不建议
   inotifywait --recursive --monitor --event modify,create,delete --format '%w%f' "$WATCH_DIR" | (
     start_swoole # 初始启动一次 Swoole 服务器
     while read -r changed_file; do
       # 检查文件类型和排除目录
-      file_extension="${changed_file##*.}"
+      file_extension=".${changed_file##*.}"
       file_path="${changed_file%/*}"
       # 判断后缀是否为php或env
-      if [ "$file_extension" = php ] || [ "$file_extension" = env ]; then
+      if echo "$file_extension" | grep -qE "$WATCH_EXT_PATTERN"; then
         if ! echo "$file_path" | grep -qE "$EXCLUDE_PATTERN"; then
           printf "\033[0;33m🆕 Detected changes in file: %s\033[0m\n" "$changed_file"
           restart_swoole_debounced
