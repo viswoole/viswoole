@@ -22,7 +22,7 @@
 
 ## 文档
 
-[Viswoole开发文档](https://viswoole.com/docs/)
+[Viswoole开发文档](https://viswoole.com)
 
 ### 安装
 
