@@ -6,3 +6,6 @@
 composer.lock
 # 忽略.env环境配置文件
 .env
+
+# 忽略qoder生成的文件
+.qoder
