@@ -8,7 +8,8 @@
 #  +----------------------------------------------------------------------
 #  | Author: ZhuChongLin <8210856@qq.com>
 #  +----------------------------------------------------------------------
-# 使用该脚本监控文件变化，并自动重启服务，系统必须安装inotify-tools工具。
+# 使用该脚本监控文件变化，并自动重启服务，无需安装额外依赖（基于find轮询实现）。
+
 # 监听的目录
 WATCH_DIR="$(dirname "$(readlink -f "$0")")"
 # 要监听文件的后缀
@@ -19,97 +20,85 @@ EXCLUDE_DIRS="runtime|vendor|.idea|.vscode|.git"
 EXCLUDE_PATTERN="^$WATCH_DIR/($(echo "$EXCLUDE_DIRS" | sed 's/\./\\./g'))(/.*)?"
 # 构建文件后缀的正则表达式
 WATCH_EXT_PATTERN="$WATCH_EXT$"
-# 设置防抖间隔（以秒为单位）
+# 防抖间隔（秒），连续变更在此时间内只触发一次重启
 DEBOUNCE_INTERVAL=1
-# 用来保存上次重启时间的时间戳
-LAST_RESTART_TIME=0
+# 轮询间隔（秒），值越小响应越快但CPU占用越高
+POLL_INTERVAL=1
+
 # 根据传入的参数决定启动命令
 if [ -n "$1" ]; then
-  # Swoole 服务启动命令
   SWOOLE_START_COMMAND="php viswoole server:start $1"
-  # Swoole 服务停止命令
   SWOOLE_CLOSE_COMMAND="php viswoole server:close $1"
 else
   SWOOLE_START_COMMAND="php viswoole server:start"
   SWOOLE_CLOSE_COMMAND="php viswoole server:close"
 fi
-# 设置一个trap来捕获中断信号并执行清理操作 (Ctrl+C) ，信号已被viswoole内部接管，无需再需处理
-# trap 'printf "\n\033[0;33m🛑 捕获到停止信号，正在停止服务运行...\033[0m\n"; '"$SWOOLE_CLOSE_COMMAND"'; exit 0' INT
-# 获取当前 Swoole 服务的 PID
-get_swoole_pid() {
-  pid=$(pgrep -f "$SWOOLE_START_COMMAND" | head -n 1)
-  echo "$pid"
+
+# 防抖延迟任务 PID
+delayed_restart_pid=""
+
+# 清理函数：取消延迟任务、停止服务、退出
+cleanup() {
+  # 先重置 trap 防止递归
+  trap - INT TERM
+  printf "\n\033[0;33m🛑 捕获到停止信号，正在清理...\033[0m\n"
+  # 取消延迟重启任务
+  [ -n "$delayed_restart_pid" ] && kill -9 "$delayed_restart_pid" 2>/dev/null
+  # 停止 Swoole 服务
+  eval "$SWOOLE_CLOSE_COMMAND" >/dev/null 2>&1
+  exit 0
 }
-# 启动 Swoole 服务
+trap cleanup INT TERM
+
+# 停止旧服务并启动新服务
 start_swoole() {
-  pid=$(get_swoole_pid)
-  if [ -n "$pid" ]; then
-    # 使用 SWOOLE_CLOSE_COMMAND 命令停止服务
-    eval "$SWOOLE_CLOSE_COMMAND" >/dev/null 2>&1 &
-    stop_pid=$!
-    printf "\033[0;33m🔄 Swoole server restarting...\033[0m\n"
-    # 等待停止命令执行完毕
-    wait "$stop_pid"
-  fi
-  # 启动服务
+  printf "\033[0;33m🔄 Swoole server restarting...\033[0m\n"
+  # 停止旧服务
+  eval "$SWOOLE_CLOSE_COMMAND" >/dev/null 2>&1
+  # 等待服务完全停止，确保端口释放
+  sleep 1
+  # 启动新服务（后台运行，不阻塞监控循环）
   eval "$SWOOLE_START_COMMAND" &
-  # printf "\033[0;32m✅ Swoole server started.\033[0m\n"
 }
-# 取消先前的延迟执行任务
-cancel_delayed_restart() {
-  if [ -n "$delayed_restart_pid" ]; then
-    kill -9 "$delayed_restart_pid" >/dev/null 2>&1
-    delayed_restart_pid=""
-  fi
-}
-# 重启服务，防抖
+
+# 防抖重启：每次文件变更都取消之前的延迟任务，重新延迟执行
+# 只有最后一次变更后 DEBOUNCE_INTERVAL 秒才会真正重启
 restart_swoole_debounced() {
-  current_time=$(date +%s)
-  # 使用expr进行算术比较（注意expr语法需要空格和转义）
-  if [ $((current_time - LAST_RESTART_TIME)) -ge $DEBOUNCE_INTERVAL ]; then
-    elapsed_seconds=$((current_time - LAST_RESTART_TIME))
-    if [ $elapsed_seconds -ge $DEBOUNCE_INTERVAL ]; then
-      # 更新上次重启时间
-      LAST_RESTART_TIME=$current_time
-      # 取消先前的延迟执行任务
-      cancel_delayed_restart
-      # 延迟执行重启操作
-      (sleep $DEBOUNCE_INTERVAL && start_swoole) &
-      delayed_restart_pid=$!
-    else
-      # 如果还在防抖间隔内，则取消先前的延迟执行任务并重新延迟执行
-      cancel_delayed_restart
-      (sleep $DEBOUNCE_INTERVAL && start_swoole) &
-      delayed_restart_pid=$!
-      echo "Restart delayed due to debounce interval."
-    fi
-  fi
+  # 取消先前的延迟执行任务
+  [ -n "$delayed_restart_pid" ] && kill -9 "$delayed_restart_pid" 2>/dev/null
+  # 重新设置延迟执行任务
+  (sleep $DEBOUNCE_INTERVAL && start_swoole) &
+  delayed_restart_pid=$!
 }
+
 # 开始监控文件变化
 start_monitoring() {
   # 输出正在统计的信息
   printf "\033[0;33m📊 The number of monitored files is being counted...\033[0m\n"
-  # 使用 find 获取所有文件，然后通过正则表达式 筛选出要监听的文件
+  # 统计要监听的文件数
   file_count=$(find "$WATCH_DIR" -type f | grep -vE "$EXCLUDE_PATTERN" | grep -E "$WATCH_EXT_PATTERN" | grep -c .)
   # 输出监控信息
   printf "\033[0;33m📂 Monitoring directory: %s\n📁 Excluded directory: %s\n📃 Total files: %d，expansion：%s\n👀 Waiting for changes...\033[0m\n" "$WATCH_DIR" "$EXCLUDE_DIRS" "$file_count" "$WATCH_EXT"
-  # 使用inotifywait监文件变动，并在 Watches established. 后执行一次restart_swoole
-  # 可在"$WATCH_DIR"后面加上`> /dev/null 2>&1`即可静默执行，但不建议
-  inotifywait --recursive --monitor --event modify,create,delete --format '%w%f' "$WATCH_DIR" | (
-    start_swoole # 初始启动一次 Swoole 服务器
-    while read -r changed_file; do
-      # 检查文件类型和排除目录
-      file_extension=".${changed_file##*.}"
-      file_path="${changed_file%/*}"
-      # 判断后缀是否为php或env
-      if echo "$file_extension" | grep -qE "$WATCH_EXT_PATTERN"; then
-        if ! echo "$file_path" | grep -qE "$EXCLUDE_PATTERN"; then
-          printf "\033[0;33m🆕 Detected changes in file: %s\033[0m\n" "$changed_file"
-          restart_swoole_debounced
-        fi
-      fi
-    done
-  )
+  # 创建临时文件作为时间基准
+  time_marker=$(mktemp)
+  # 初始启动一次 Swoole 服务器
+  start_swoole
+  # 轮询检测文件变化
+  while true; do
+    sleep $POLL_INTERVAL
+    # 查找比 time_marker 更新的文件，再用 grep 过滤后缀和排除目录
+    changed_files=$(find "$WATCH_DIR" -type f -newer "$time_marker" 2>/dev/null | grep -E "$WATCH_EXT_PATTERN" | grep -vE "$EXCLUDE_PATTERN")
+    # 更新基准文件时间戳（在 find 之后更新，确保本轮变更不会漏检）
+    touch "$time_marker"
+    if [ -n "$changed_files" ]; then
+      # 输出变更文件
+      printf "%s\n" "$changed_files" | while read -r changed_file; do
+        printf "\033[0;33m🆕 Detected changes in file: %s\033[0m\n" "$changed_file"
+      done
+      restart_swoole_debounced
+    fi
+  done
 }
+
 # 调用启动监控函数
 start_monitoring
