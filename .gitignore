@@ -9,3 +9,10 @@ composer.lock
 
 # 忽略qoder生成的文件
 .qoder
+
+# 测试相关
+test.php
+
+# 部署相关
+Dockerfile
+docker-compose.yml
