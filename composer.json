@@ -23,8 +23,7 @@
     "viswoole/framework": "^1.0.1"
   },
   "require-dev": {
-    "swoole/ide-helper": ">=5.1",
-    "phpunit/phpunit": "^11.1.0"
+    "swoole/ide-helper": ">=5.1"
   },
   "autoload": {
     "psr-4": {
