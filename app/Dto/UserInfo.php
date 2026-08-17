@@ -13,7 +13,7 @@
 
 declare (strict_types=1);
 
-namespace App\Interface;
+namespace App\Dto;
 
 use Viswoole\Core\Validate\Rules\Chinese;
 
