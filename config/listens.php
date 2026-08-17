@@ -3,4 +3,10 @@
 // | 事件监听注册
 // +----------------------------------------------------------------------
 
-declare (strict_types=1);
+declare(strict_types=1);
+
+use Viswoole\Core\Facade\Event;
+
+Event::on('AppInitialized', function () {
+  echo_log('应用初始化完成');
+}, 1);
