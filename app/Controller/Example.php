@@ -15,7 +15,7 @@ declare (strict_types=1);
 
 namespace App\Controller;
 
-use App\Interface\UserInfo;
+use App\Dto\UserInfo;
 use App\Response;
 use Viswoole\HttpServer\AutoInject\InjectFile;
 use Viswoole\HttpServer\AutoInject\InjectGet;
