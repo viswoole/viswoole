@@ -20,7 +20,9 @@
     "php": ">=8.4",
     "ext-swoole": ">=5.1",
     "ext-sockets": "*",
-    "viswoole/framework": "^1.1.2"
+    "ext-redis": "*",
+    "ext-pdo": "*",
+    "viswoole/framework": "^1.5.1"
   },
   "require-dev": {
     "swoole/ide-helper": ">=5.1"
