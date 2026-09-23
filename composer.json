@@ -22,7 +22,7 @@
     "ext-sockets": "*",
     "ext-redis": "*",
     "ext-pdo": "*",
-    "viswoole/framework": "^1.6.2"
+    "viswoole/framework": "^1.7.0"
   },
   "require-dev": {
     "swoole/ide-helper": ">=5.1"
