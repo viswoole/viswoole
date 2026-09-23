@@ -5,10 +5,6 @@ composer.lock
 # 忽略.env环境配置文件
 .env
 
-# 配置文件由框架包发布（post-autoload-dump 自动执行 vendor:publish），
-# 仓库不跟踪，composer create-project 安装依赖时自动生成
-/config/
-
 # 忽略所有以.开头的私有目录，如.idea、.vscode等目录
 .*/
 
